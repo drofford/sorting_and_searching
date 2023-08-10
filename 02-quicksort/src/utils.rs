@@ -102,3 +102,59 @@ pub fn make_random_vec(num_items: i32, max: i32) -> Vec<i32> {
     }
     return vec;
 }
+
+/* 
+ The Lomuto algorithm from Wikipedia
+
+// Divides array into two partitions
+algorithm partition(A, lo, hi) is 
+  pivot := A[hi] // Choose the last element as the pivot
+
+  // Temporary pivot index
+  i := lo - 1
+
+  for j := lo to hi - 1 do 
+    // If the current element is less than or equal to the pivot
+    if A[j] <= pivot then 
+      // Move the temporary pivot index forward
+      i := i + 1
+      // Swap the current element with the element at the temporary pivot index
+      swap A[i] with A[j]
+
+  // Move the pivot element to the correct pivot position (between the smaller and larger elements)
+  i := i + 1
+  swap A[i] with A[hi]
+  return i // the pivot index
+
+*/
+
+
+
+pub fn partition(vec: &mut Vec<i32>, lo: i32, hi: i32) -> i32 {
+    print!("partition: input vector has {} elements: ", vec.len());
+    print_vec(&vec, vec.len() as i32);
+
+    let pivot = vec[hi as usize];
+    println!("partition: initial pivot = {}", pivot);
+
+    let mut i = lo -1;
+
+    for j in lo..(hi - 1) {
+        print!("partition: pivot={}, lo={}, hi={}, i={}, j={}", 
+            pivot, lo, hi, i, j);
+        if i >= 0 { print!(", vec[i] = {}", vec[i as usize]); }
+        if j >= 0 { print!(", vec[j] = {}", vec[j as usize]); }
+        println!("");
+        // println!("partition: pivot={}, lo={}, hi={}, i={}, j={}, vec[i]={}, vec[j]={}", 
+        //     pivot, lo, hi, i, j, vec[i as usize], vec[j as usize]);
+        // println!("partition: pivot={}, lo={}, hi={}, i={}, j={}, vec[i]={}, vec[j]={}", 
+        //     pivot, lo, hi, i, j, vec[i as usize], vec[j as usize]);
+        if vec[j as usize] <= pivot {
+            i += 1;
+            vec.swap(i.try_into().unwrap(), j.try_into().unwrap());
+        }
+    }
+    i += 1;
+    vec.swap(i.try_into().unwrap(), hi.try_into().unwrap());
+    return i;
+}
