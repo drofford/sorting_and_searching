@@ -1,0 +1,5 @@
+$ cargo run -q
+initial array of 25 values: [89 84 82 97 89 29 39 86 35 30 13 60 95 35 57 44 83 55 23 41 66 57 38 7 7]
+initial array of 25 values: [7 7 13 23 29 30 35 35 38 39 41 44 55 57 57 60 66 82 83 84 86 89 89 95 97]
+The vector is sorted!
+$
