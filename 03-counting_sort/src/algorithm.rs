@@ -21,9 +21,25 @@
 
 
 
-pub fn count_sort(inp: &Vec<i32>) -> Vec<i32> {
-    let mut cnt = make_new_zero_vec(inp.len());
+pub fn count_sort(inp: &Vec<i32>, k: i32) -> Vec<i32> {
+    let mut cnt = make_new_zero_vec(k as usize);
     let mut out = make_new_zero_vec(inp.len());
+
+    for i in 0..inp.len() {
+        let j = inp[i];
+        cnt[j as usize] += 1;
+    }
+
+    for i in 1..cnt.len() {
+        cnt[i] = cnt[i] + cnt[i-1];
+    }
+
+    for i in (0..inp.len()).rev() {
+        let j = inp[i];
+        cnt[j as usize] = cnt[j as usize] - 1;
+        out[cnt[j as usize] as usize] = inp[i];
+    }
+
     out
 }
 
