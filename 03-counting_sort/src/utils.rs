@@ -1,49 +1,6 @@
 use std::time::{SystemTime, UNIX_EPOCH};
 
-const SIZE: usize = 25;
-const MAXVAL: usize = 100;
-
-fn main() {
-    let mut array = make_random_vec(SIZE, MAXVAL);
-    print!("initial array of {} values: ", array.len());
-    print_vec(&array, SIZE);
-
-    quicksort(&mut array);
-    print!("initial array of {} values: ", array.len());
-    print_vec(&array, SIZE);
-
-    check_sorted(&array);
-}
-
-fn quicksort(array: &mut [i32]) {
-    if !array.is_empty() {
-        let pivot_idx = partition(array);
-        let len = array.len();
-
-        quicksort(&mut array[0..pivot_idx]);
-        quicksort(&mut array[pivot_idx + 1..len]);
-    }
-}
-
-fn partition(array: &mut [i32]) -> usize {
-    let len = array.len();
-    let pivot = array[len - 1];
-    let mut i = 0;
-    let mut j = 0;
-
-    while j < len - 1 {
-        if array[j] <= pivot {
-            array.swap(i, j);
-            i += 1;
-        }
-        j += 1;
-    }
-
-    array.swap(i, len - 1);
-    i
-}
-
-fn print_vec(vec: &Vec<i32>, num_items: usize) {
+pub fn print_vec(vec: &Vec<i32>, num_items: usize) {
     let mut max = vec.len();
     if max > num_items
     /* as usize */
@@ -66,7 +23,7 @@ fn print_vec(vec: &Vec<i32>, num_items: usize) {
     println!("{string}");
 }
 
-fn check_sorted(vec: &Vec<i32>) {
+pub fn check_sorted(vec: &Vec<i32>) {
     for i in 1usize..vec.len() {
         if vec[i] < vec[i - 1] {
             println!("The vector is NOT sorted!");
@@ -75,12 +32,12 @@ fn check_sorted(vec: &Vec<i32>) {
     println!("The vector is sorted!");
 }
 
-struct Prng {
+pub struct Prng {
     seed: u32,
 }
 
 impl Prng {
-    fn new() -> Self {
+    pub fn new() -> Self {
         let mut prng = Self { seed: 0 };
         prng.randomize();
         return prng;
@@ -116,7 +73,7 @@ impl Prng {
 }
 
 // Make a vector of random i32 values in the range [0 and max).
-fn make_random_vec(num_items: usize, max: i32) -> Vec<i32> {
+pub fn make_random_vec(num_items: usize, max: i32) -> Vec<i32> {
     // Prepare a Prng.
     let mut prng = Prng::new();
 
