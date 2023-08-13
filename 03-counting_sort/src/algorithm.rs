@@ -1,46 +1,56 @@
-// mod utils;
-//
-// use utils::{check_sorted, make_random_vec, print_vec};
-//
-// const SIZE: usize = 25;
-// const MAXVAL: i32 = 100;
+// here's the count sort algorithm in pseudocode from Wikipedia:
 
-// fn main() {
-//     let mut array = make_random_vec(SIZE, MAXVAL);
-//     print!("initial array of {} values: ", array.len());
-//     print_vec(&array, SIZE);
-//
-//     quicksort(&mut array);
-//     print!("initial array of {} values: ", array.len());
-//     print_vec(&array, SIZE);
-//
-//     check_sorted(&array);
+// function CountingSort(input, k)
+
+//     count ← array of k + 1 zeros
+//     output ← array of same length as input
+
+//     for i = 0 to length(input) - 1 do
+//         j = key(input[i])
+//         count[j] = count[j] + 1
+
+//     for i = 1 to k do
+//         count[i] = count[i] + count[i - 1]
+
+//     for i = length(input) - 1 down to 0 do
+//         j = key(input[i])
+//         count[j] = count[j] - 1
+//         output[count[j]] = input[i]
+
+//     return output
+
+
+
+pub fn count_sort(inp: &Vec<i32>) -> Vec<i32> {
+    let mut cnt = make_new_zero_vec(inp.len());
+    let mut out = make_new_zero_vec(inp.len());
+    out
+}
+
+
+fn make_new_zero_vec(num_items: usize) -> Vec<i32> {
+    let mut vec: Vec<i32> = Vec::with_capacity(num_items as usize);
+    for _ in 0..num_items {
+        vec.push(0);
+    }
+    vec
+}
+
+
+// fn partition(array: &mut [i32]) -> usize {
+//     let len = array.len();
+//     let pivot = array[len - 1];
+//     let mut i = 0;
+//     let mut j = 0;
+
+//     while j < len - 1 {
+//         if array[j] <= pivot {
+//             array.swap(i, j);
+//             i += 1;
+//         }
+//         j += 1;
+//     }
+
+//     array.swap(i, len - 1);
+//     i
 // }
-
-pub fn quicksort(array: &mut [i32]) {
-    if !array.is_empty() {
-        let pivot_idx = partition(array);
-        let len = array.len();
-
-        quicksort(&mut array[0..pivot_idx]);
-        quicksort(&mut array[pivot_idx + 1..len]);
-    }
-}
-
-fn partition(array: &mut [i32]) -> usize {
-    let len = array.len();
-    let pivot = array[len - 1];
-    let mut i = 0;
-    let mut j = 0;
-
-    while j < len - 1 {
-        if array[j] <= pivot {
-            array.swap(i, j);
-            i += 1;
-        }
-        j += 1;
-    }
-
-    array.swap(i, len - 1);
-    i
-}

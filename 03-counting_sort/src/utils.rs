@@ -27,6 +27,7 @@ pub fn check_sorted(vec: &Vec<i32>) {
     for i in 1usize..vec.len() {
         if vec[i] < vec[i - 1] {
             println!("The vector is NOT sorted!");
+            return;
         }
     }
     println!("The vector is sorted!");
