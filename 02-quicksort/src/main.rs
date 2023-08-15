@@ -1,7 +1,7 @@
 use std::time::{SystemTime, UNIX_EPOCH};
 
 const SIZE: usize = 25;
-const MAXVAL: usize = 100;
+const MAXVAL: i32 = 100;
 
 fn main() {
     let mut array = make_random_vec(SIZE, MAXVAL);
