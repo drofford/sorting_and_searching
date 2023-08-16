@@ -7,7 +7,7 @@ fn main() {
     let num_items = get_i32("Items: ");
     let max = get_i32("Max: ");
 
-    let mut my_vec = make_random_vec(num_items, max);
+    let mut my_vec = make_random_vec(num_items, max+1);
     print!("Unsorted vector: ");
     print_vec(&my_vec, 40);
 
@@ -21,19 +21,52 @@ fn main() {
         if target == -1 {
             break;
         }
-        linear_search(&my_vec, target);
+        binary_search(&my_vec, target);
     }
 
 }
 
-fn linear_search(vec: &Vec<i32>, target: i32) {
-    for i in 0..vec.len() {
-        if vec[i] == target {
-            println!("numbers[{}] = {}, {} tests", i, target, i+1);
-            return;
+/*
+Here's the algorithm, from Wikipedia:
+
+function binary_search(A, n, T) is
+    l := 0
+    r := n − 1
+    while l ≤ r do
+        m := floor((l + r) / 2)
+        if A[m] < T then
+            l := m + 1
+        else if A[m] > T then
+            r := m − 1
+        else:
+            return m
+    return unsuccessful
+*/
+fn binary_search(vec: &Vec<i32>, target: i32) {
+    if vec.len() == 0 {
+        println!("Error: Vector is empty: search cannot continue");
+        return;
+    }
+    let mut count: i32 = 0;
+    let mut l: i32 = 0;
+    let mut r: i32 = vec.len() as i32 - 1;
+    while l <= r {
+        let m: i32 = (l + r) / 2;
+        count += 1;
+        if vec[m as usize] < target {
+            l = m + 1;
+        } else {
+            count += 1;
+            if vec[m as usize] > target {
+                r = m - 1;
+            }
+            else {
+                println!("numbers[{}] = {}, {} tests", m, target, count);
+                return;
+            }
         }
     }
-    println!("Target {} not found, {} tests", target, vec.len());
+    println!("Target {} not found, {} tests", target, count);
 }
 
 fn quicksort(array: &mut [i32]) {
