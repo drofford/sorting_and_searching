@@ -7,7 +7,12 @@ fn main() {
     let num_items = get_i32("Items: ");
     let max = get_i32("Max: ");
 
-    let my_vec = make_random_vec(num_items, max);
+    let mut my_vec = make_random_vec(num_items, max);
+    print!("Unsorted vector: ");
+    print_vec(&my_vec, 40);
+
+    quicksort(&mut my_vec);
+    print!("Sorted vector  : ");
     print_vec(&my_vec, 40);
 
     loop {
@@ -30,6 +35,35 @@ fn linear_search(vec: &Vec<i32>, target: i32) {
     }
     println!("Target {} not found, {} tests", target, vec.len());
 }
+
+fn quicksort(array: &mut [i32]) {
+    if !array.is_empty() {
+        let pivot_idx = partition(array);
+        let len = array.len();
+
+        quicksort(&mut array[0..pivot_idx]);
+        quicksort(&mut array[pivot_idx + 1..len]);
+    }
+}
+
+fn partition(array: &mut [i32]) -> usize {
+    let len = array.len();
+    let pivot = array[len - 1];
+    let mut i = 0;
+    let mut j = 0;
+
+    while j < len - 1 {
+        if array[j] <= pivot {
+            array.swap(i, j);
+            i += 1;
+        }
+        j += 1;
+    }
+
+    array.swap(i, len - 1);
+    i
+}
+
 
 fn get_i32(prompt: &str) -> i32 {
     print!("{prompt}");
